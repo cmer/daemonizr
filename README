@@ -1,0 +1,7 @@
+= Daemonizr - Process forking and monitoring for mere mortals
+
+An example is worth a thousand words...
+
+d = Daemonizr.new("Daemonizr")
+d.start_cluster("MyServer", 3, lambda {loop{ sleep 2; File.open("/tmp/daemonizr.log", "a") { |f| f.puts "#{Process.pid}: #{Time.now}" }  }})
+d.monitor_cluster! # Will hang here until the process is terminated with SIGTERM (kill 5). If a fork dies, it will be restarted.
